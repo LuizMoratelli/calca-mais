@@ -6,6 +6,9 @@
   "repository": "https://github.com/LuizMoratelli/api_oop.git",
   "author": "(Hugo Hoffmann <hugohoffmann04@gmail.com>) (Luiz Augusto Moratelli <gameplayteam12@gmail.com>)",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
