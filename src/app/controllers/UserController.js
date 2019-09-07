@@ -64,9 +64,19 @@ class UserController{
         })
     };
 
-    // async index(req, res){
+    async index(req, res){
+        const users = await User.findAll();
 
-    // }
+        return res.json(users);
+    }
+
+    async show(req, res){
+        const schema = Yup.object().shape({
+            id: Yup.number(),
+        });
+        if(! (await schema.isValid(req.body)) ) return res.status(400).json({ error: "Not inform id" })
+
+    }
 
 }
 
