@@ -6,8 +6,8 @@ const routes = new Router();
 // routes to users
 routes.post('/users', UserController.store);
 routes.get('/users', UserController.index);
-routes.get('/users/{user}', UserController.show);
-routes.put('/users/{user}', UserController.update);
-routes.delete('/users/{user}', UserController.delete);
+routes.get('/users/:id', UserController.show);
+routes.put('/users/:id', UserController.update);
+routes.delete('/users/:id', UserController.delete);
 
 export default routes;
