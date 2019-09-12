@@ -9,15 +9,15 @@ class UsuarioController{
             email: Yup.string().required().email(),
             password: Yup.string().required().min(6),
         });
-        if(! (await schema.isValid(req.body)) ) 
-            return res.status(400).json({ error: "Validation fails!" });
+        if(!(await schema.isValid(req.body)) )
+            return res.status(400).json({ error: "Falha na Validação!" });
 
         // check if user exists
         const usuarioExists = await Usuario.findOne({
             where: { email: req.body.email }
         });
 
-        if(usuarioExists) return res.status(400).json({ error: "User already exists!" })
+        if(usuarioExists) return res.status(400).json({ error: "Usuário já existe!" })
 
         const { id, nome, email } = await Usuario.create(req.body);
         return res.json({
