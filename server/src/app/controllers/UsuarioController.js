@@ -3,16 +3,15 @@ import Usuario from '../models/Usuario';
 class UsuarioController{
 
   async store(req, res){
-    // datas validation
     const schema = Yup.object().shape({
       nome: Yup.string().required(),
       email: Yup.string().required().email(),
       password: Yup.string().required().min(6),
     });
+    
     if (!(await schema.isValid(req.body)))
-      return res.status(400).json({ error: "Falha na Validação!" });
-
-    // check if user exists
+    return res.status(400).json({ error: "Falha na Validação!" });
+    
     const usuarioExists = await Usuario.findOne({
       where: { email: req.body.email }
     });
@@ -35,10 +34,10 @@ class UsuarioController{
       email: Yup.string().email(),
       oldPassword: Yup.string().min(10),
       password: Yup.string().min(10).when('oldPassword', (oldPassword, field) => 
-          oldPassword ? field.required() : field
+        oldPassword ? field.required() : field
       ),
       confirmPassword: Yup.string().min(10).when('password', (password, field) => 
-          password ? field.required().oneOf([ Yup.ref('password') ]) : field 
+        password ? field.required().oneOf([ Yup.ref('password') ]) : field 
       ),
     });
 
