@@ -4,15 +4,20 @@ import routes from './routes';
 import './database';
 
 class App{
-    constructor(){
-        this.server = express();
+  constructor(){
+    this.server = express();
 
-        this.routes();
-    }
+    this.middlewares();
+    this.routes();
+  }
+
+  middlewares() {
+    this.server.use(express.json());
+  }
     
-    routes(){
-        this.server.use('/api',routes);
-    }
+  routes(){
+    this.server.use('/api', routes);
+  }
 }
 
 export default new App().server;
