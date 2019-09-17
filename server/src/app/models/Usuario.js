@@ -7,23 +7,23 @@ class Usuario extends Model {
       {
         nome: Sequelize.STRING,
         email: Sequelize.STRING,
-        pass: Sequelize.VIRTUAL,
-        password: Sequelize.STRING,
+        password: Sequelize.VIRTUAL,
+        password_hash: Sequelize.STRING,
       },
       {
         sequelize,
       }
     );
     this.addHook('beforeSave', async (usuario) => {
-      if (usuario.pass) 
-        usuario.password = await bcrypt.hash(usuario.pass, 8);
+      if (usuario.password) 
+        usuario.password_hash = await bcrypt.hash(usuario.password, 8);
     });
 
     return this;
   };
 
-  checkPassword(pass){
-    return bcrypt.compare(pass, this.password);
+  checkPassword(password){
+    return bcrypt.compare(password, this.password_hash);
   }
 }
 
