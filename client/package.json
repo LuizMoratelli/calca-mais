@@ -36,5 +36,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-plugin-root-import": "^6.4.1",
+    "babel-root-import": "^4.1.8",
+    "customize-cra": "^0.8.0"
   }
 }
