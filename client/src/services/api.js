@@ -1,18 +1,16 @@
-import axios from 'axios';
+import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://localhost:8000',
+  baseURL: 'http://localhost:8000',
 })
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('@calcamais:token');
-    const headers = {...config.headers };
+  const token = localStorage.getItem('@calcamais:token')
+  const headers = { ...config.headers }
 
-    if(token){
-        headers.Authorization = `Bearer ${token}`;
-    }
+  if (token) return headers.Authorization = `Bearer ${token}`
 
-    return { ...config, headers};
+  return { ...config, headers }
 })
 
-export default api;
+export default api

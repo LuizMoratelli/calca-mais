@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-import { Container } from './styles';
+import { Container } from './styles'
 
-export default function SignUp() {
-  return (
-    <Container>
-        
-    </Container>
-  );
-}
+const SignUp = () => (
+  <Container>
+      
+  </Container>
+)
+
+export default SignUp
