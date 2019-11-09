@@ -8,14 +8,18 @@ import Guest from './guest'
 
 import Main from '../pages/Main'
 import SignIn from '../pages/Auth/SignIn'
-import SignUp from '../pages/Auth/SignUp'
+import Schoes from '../pages/Schoes'
+import Category from '../pages/Category'
+import User from '../pages/User'
 
 const Routes = () => (
   <ConnectedRouter history={history}>
     <Switch>
       <Guest path="/signin" component={SignIn} />
-      <Guest path="/signup" component={SignUp} />
       <Private path="/" exact component={Main} />
+      <Private path="/category" component={Category} />
+      <Private path="/schoes" component={Schoes} />
+      <Private path="/users" component={User} />
     </Switch>
   </ConnectedRouter>
 )
