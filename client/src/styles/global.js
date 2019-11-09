@@ -16,6 +16,9 @@ export default createGlobalStyle`
     body, input, button{
         font: 14px Roboto, sans-serif;
     }
+    html, body, #root{
+        height: 100%;
+    }
     #root{
         max-width: 1020px;
         margin: 0 auto;
