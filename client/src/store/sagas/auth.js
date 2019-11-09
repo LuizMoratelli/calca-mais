@@ -3,7 +3,7 @@ import { actions as toastrActions } from 'react-redux-toastr';
 import {push} from 'connected-react-router';
 
 import AuthActions from '../ducks/auth';
-import api from '~/services/api';
+import api from '../../services/api';
 
 export function* signIn({ email, password }){
     try {
