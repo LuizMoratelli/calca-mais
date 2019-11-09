@@ -8,7 +8,7 @@ import api from '../../services/api';
 export function* signIn({ email, password }){
     try {
         const response = yield call(api.post,'api/auth/login', {email, password} );
-        localStorage.setItem('@CalcaMais:token', response.data.token);
+        localStorage.setItem('@calcamais:token', response.data.token);
 
         yield put(AuthActions.signInSuccess(response.data.token))
         yield put(push('/'));
@@ -45,7 +45,7 @@ export function* signUp({ nome, email, password }){
 export function* signOut(){
     yield call(api.post,'api/auth/logout');
 
-    localStorage.removeItem('@CalcaMais:token');
+    localStorage.removeItem('@calcamais:token');
 
     yield put(push('/signin'));
 }

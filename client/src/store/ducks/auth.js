@@ -15,8 +15,6 @@ export default Creators;
 const INITIAL_STATE = Immutable({
     signedIn: !!localStorage.getItem('@CalcaMais:token'),
     token: localStorage.getItem('@CalcaMais:token') || null,
-    roles: [],
-    permissions: [],
 });
 
 export const success = (state, {token}) => {
