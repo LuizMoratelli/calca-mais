@@ -13,8 +13,8 @@ export const AuthTypes = Types;
 export default Creators;
 
 const INITIAL_STATE = Immutable({
-    signedIn: !!localStorage.getItem('@CalcaMais:token'),
-    token: localStorage.getItem('@CalcaMais:token') || null,
+    signedIn: !!localStorage.getItem('@calcamais:token'),
+    token: localStorage.getItem('@calcamais:token') || null,
 });
 
 export const success = (state, {token}) => {

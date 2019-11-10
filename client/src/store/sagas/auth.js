@@ -8,9 +8,9 @@ import api from '../../services/api';
 export function* signIn({ email, password }){
     try {
         const response = yield call(api.post,'api/auth/login', {email, password} );
-        localStorage.setItem('@calcamais:token', response.data.token);
+        localStorage.setItem('@calcamais:token', response.data.access_token);
 
-        yield put(AuthActions.signInSuccess(response.data.token))
+        yield put(AuthActions.signInSuccess(response.data.access_token))
         yield put(push('/'));
     } catch (error) {
         console.log(error);
@@ -27,8 +27,7 @@ export function* signUp({ nome, email, password }){
         yield call(api.post,'api/usuarios', { nome, email, password } );
 
         const response = yield call(api.post,'api/auth/login', { email, password } );
-
-        localStorage.setItem('@CalcaMais:token', response.data.token);
+        localStorage.setItem('@calcamais:token', response.data);
 
         yield put(AuthActions.signInSuccess(response.data.token))
         yield put(push('/'));
