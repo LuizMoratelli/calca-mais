@@ -8,7 +8,9 @@ api.interceptors.request.use((config) => {
   const token = localStorage.getItem('@calcamais:token')
   const headers = { ...config.headers }
 
-  if (token) return headers.Authorization = `Bearer ${token}`
+  if (token){
+    headers.Authorization = `Bearer ${token}`
+  } 
 
   return { ...config, headers }
 })
