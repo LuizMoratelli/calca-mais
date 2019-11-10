@@ -11,11 +11,16 @@ cd server && composer install
 ```sh
 cd client && yarn install
 ```
+## Config JWT auth
 
+```sh
+cd server && php artisan jwt:secret
+
+```
 ## Start Server
 
 ```sh
-cd server && php artisan serve
+ php artisan serve
 ```
 
 ## Start Client
