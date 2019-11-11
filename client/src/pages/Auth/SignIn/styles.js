@@ -21,6 +21,7 @@ export const SignForm = styled.form`
     h1{
         font-size: 26px;
         font-weight: 500;
+        color: #f6f6f6;
         text-align: center;
         margin: 0 0 10px;
     }
