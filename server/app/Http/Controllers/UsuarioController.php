@@ -32,12 +32,12 @@
   }
 
   public function destroy(Usuario $usuario) {
-    if ($usuario == auth()->user()) {
+    if ($usuario !== auth()->user()) {
       $usuario->delete();
       return response('apagado', 204);
 
     }
 
-    return response('precisa estar logado', 400);
+    return response('Você não pode se apagar hahahahaha', 400);
   }
  }
