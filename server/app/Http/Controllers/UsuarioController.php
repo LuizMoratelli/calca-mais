@@ -24,7 +24,7 @@
   }
 
   public function update(Request $request, Usuario $usuario) {
-    if ($usuario == auth()->user()) {
+    if (auth()->user()) {
       $usuario->update($request->all());
     }
 
