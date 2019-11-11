@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-// import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import background from '../assets/images/fundo.svg';
 export default createGlobalStyle`
