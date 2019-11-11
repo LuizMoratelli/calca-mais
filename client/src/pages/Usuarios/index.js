@@ -46,15 +46,15 @@ export default function Users() {
   }
 
   function removeUser(id) {
-    const usersFilter = usuarios.filter(value => value.rowIndex !== id);
+    const usersFilter = usuarios.filter(usuario => usuario.id !== id);
 
     setUsuarios(usersFilter);
   }
 
-  function handleDelete(id) {
+  async function handleDelete(id) {
     removeUser(id);
     toast.success("Usuário excluído com sucesso!");
-    api.delete(`usuarios/${id}`);
+    await api.delete(`usuarios/${id}`);
   }
 
   function handleEdit({ id, nome, email, password }) {
@@ -66,7 +66,7 @@ export default function Users() {
   }
 
   async function handleSendEdit(){
-    const aux = await api.put(`usuarios/${id}`, {
+    const aux = await api.patch(`usuarios/${id}`, {
       nome: user,
       email: email,
       password: password
@@ -107,7 +107,7 @@ export default function Users() {
           <Button size="big" onClick={e => handleSubmit(e) }>Salvar</Button>
         </form>
         <ul>
-          {usuarios &&
+          {usuarios && 
             usuarios.map((user, key) => (
               <User key={key}>
                 <strong>{user.nome}</strong>
@@ -121,7 +121,7 @@ export default function Users() {
                   </ButtonIcon>
                 </strong>
               </User>
-            ))}
+            )) }
         </ul>
           {isModalOpen && ( 
             <Modal size="big">
