@@ -7,7 +7,7 @@ import Modal from "../../components/Modal";
 import Button from "../../styles/components/Button";
 import api from "../../services/api";
 
-import { Container, Calcado, ButtonIcon } from "./styles";
+import { Container, Calcado, ButtonIcon, SelectCategoria } from "./styles";
 
 export default function Calcados() {
   const [calcados, setCalcados] = useState();
@@ -39,7 +39,7 @@ export default function Calcados() {
     setNovoPreco("");
   }
 
-  async function handleBusca(){
+  async function handleBusca() {
     debugger;
     const response = await api.get(`categorias/${categoriaIdLista}/calcados`);
 
@@ -72,12 +72,11 @@ export default function Calcados() {
     setIsModalOpen(true);
   }
   async function getCategorias() {
-    const response = await api.get('categorias');
+    const response = await api.get("categorias");
 
     const { data } = response;
 
     setCategorias(data);
-
   }
 
   async function handleSendEdit() {
@@ -114,30 +113,42 @@ export default function Calcados() {
             placeholder="10,00"
             onChange={e => setNovoPreco(e.target.value)}
           />
-          <select onChange={e => setCategoriaId(e.target.value)}>
+          <SelectCategoria onChange={e => setCategoriaId(e.target.value)}>
+            {/* <option select value={categoriaId}>
+              Selecionar
+            </option> */}
             {categorias &&
               categorias.map(categoria => (
-                <option key={categoria.id} value={categoria.id}>
+                categoria.id === categoriaId ? (
+                <option select key={categoria.id} value={categoria.id}>
                   {categoria.nome}
                 </option>
+                ) : (
+                  <option select key={categoria.id} value={categoria.id}>
+                    {categoria.nome}
+                  </option>
+                )
               ))}
-          </select>
+          </SelectCategoria>
           <Button size="big" onClick={e => handleSubmit(e)}>
             Salvar
           </Button>
         </form>
 
-        <select onChange={e => setCategoriaIdLista(e.target.value)}>
+        <SelectCategoria onChange={e => setCategoriaIdLista(e.target.value)}>
+          <option select value="1">
+            Selecionar
+          </option>
           {categorias &&
             categorias.map((categoria, key) => (
               <option key={key} value={categoria.id}>
                 {categoria.nome}
               </option>
             ))}
-        </select>
+        </SelectCategoria>
 
         <Button size="big" onClick={e => handleBusca(e)}>
-            Buscar
+          Buscar
         </Button>
         <ul>
           {calcados &&
@@ -177,6 +188,20 @@ export default function Calcados() {
                 value={preco}
                 onChange={e => setPreco(e.target.value)}
               />
+              <span>Categoria</span>
+              <SelectCategoria
+                onChange={e => setCategoriaIdLista(e.target.value)}
+              >
+                <option select value="1">
+                  Selecionar
+                </option>
+                {categorias &&
+                  categorias.map((categoria, key) => (
+                    <option key={key} value={categoria.id}>
+                      {categoria.nome}
+                    </option>
+                  ))}
+              </SelectCategoria>
               <Button onClick={handleSendEdit} size="big" type="submit">
                 Salvar
               </Button>
