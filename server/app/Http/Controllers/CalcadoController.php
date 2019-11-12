@@ -28,8 +28,8 @@ class CalcadoController extends Controller
     return response()->json($calcado, 200);
   }
 
-  public function destroy(Calcado $calcado) {
-    $calcado->delete();
+  public function destroy(Categoria $categoria, Calcado $calcado) {
+    $categoria->calcados()->find($calcado->id)->delete();
 
     return response('', 204);
   }
