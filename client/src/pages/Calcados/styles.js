@@ -20,15 +20,7 @@ export const Container = styled.div`
       margin: 10px 10px;
       padding: 10px 10px;
     }
-    select {
-      max-width: auto;
-      background: #eee;
-      border: none;
-      border-radius: 4px;
-      margin: 10px 10px;
-      padding: 10px 10px;
-    }
-    button{
+    button {
       border-radius: 4px;
       width: 100px;
       border: none;
@@ -57,4 +49,13 @@ export const Calcado = styled.li`
 export const ButtonIcon = styled.button`
   background: transparent;
   border: none;
+`;
+
+export const SelectCategoria = styled.select`
+  max-width: auto;
+  background: #eee;
+  border: none;
+  border-radius: 4px;
+  margin: 10px 10px;
+  padding: 10px 10px;
 `;
