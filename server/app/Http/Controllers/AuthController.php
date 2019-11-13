@@ -4,8 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-  
+use Illuminate\Http\Request;
+
+use App\Usuario;
+
 class AuthController extends Controller {
+  public function register(Request $request) {
+    $usuario = Usuario::create($request->all());
+
+    return response()->json($usuario); 
+  }
+
   public function login(){
     $credentials = request(['email', 'password']);
 
