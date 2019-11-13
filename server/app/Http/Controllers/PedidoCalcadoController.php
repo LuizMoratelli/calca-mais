@@ -9,10 +9,12 @@ use Illuminate\Support\Str;
 class PedidoCalcadoController extends Controller
 {
   public function index(Pedido $pedido) {
-    $pedidoCalcados = PedidoCalcado::where('pedido_id', $pedido->id)->get();
-    $calcados = Calcado::whereIn('id', $pedidoCalcados->pluck('calcado_id'))->get();
+    $pedido = Pedido::join('pedidos_calcados', 'pedidos_calcados.pedido_id', '=', 'pedidos.id')
+      ->join('calcados', 'calcados.id', '=', 'pedidos_calcados.calcado_id')
+      ->where('pedidos.id', $pedido->id)
+      ->get();
 
-    return response()->json($calcados);
+    return response()->json($pedido);
   }
 
   public function store(Request $request, Pedido $pedido) {
