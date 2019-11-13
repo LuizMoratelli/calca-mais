@@ -13,6 +13,7 @@ import Calcados from '../pages/Calcados'
 import Categorias from '../pages/Categorias'
 import Usuarios from '../pages/Usuarios'
 import Pedidos from '../pages/Pedidos'
+import PedidosCalcados from '../pages/PedidosCalcados'
 
 const Routes = () => (
   <ConnectedRouter history={history}>
@@ -24,8 +25,8 @@ const Routes = () => (
       <Private path="/calcados" component={Calcados} />
       <Private path="/usuarios" component={Usuarios} />
       <Private path="/pedidos" component={Pedidos} />
-      {//<Private path="/pedidoscalcados" component={PedidosCalcados} />
-      }
+      <Private path="/pedidoscalcados" component={PedidosCalcados}/> 
+      
     </Switch>
   </ConnectedRouter>
 )
