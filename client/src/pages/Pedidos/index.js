@@ -41,13 +41,14 @@ export default function Pedidos() {
   }
 
   async function handleBusca() {
-  
     if(usuarioIdLista){
-      const response = await api.get(`pedidos`);
+      const response = await api.get(`pedidos?usuario_id=${usuarioIdLista}`);
   
       const { data } = response;
   
       if (data) setPedidos(data);
+
+
     }
   }
 

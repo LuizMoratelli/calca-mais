@@ -8,13 +8,21 @@ use App\{Pedido, Usuario};
 class PedidoController extends Controller
 {
   public function index(Request $request) {
-    $usuario = Usuario::find($request->usuario_id);
 
-    return response()->json($usuario->pedidos);
+    $pedidos = null;
+
+    if ($request->input('usuario_id')) {
+      $usuario = Usuario::find($request->input('usuario_id'));
+      $pedidos = $usuario->pedidos;
+    } else {
+      $pedidos = Pedido::all();
+    }
+
+    return response()->json($pedidos);
   }
 
   public function store(Request $request) {
-    $usuario = Usuario::find($request->get('usuario_id'));
+    $usuario = Usuario::find($request->input('usuario_id'));
 
     $pedido = $usuario->pedidos()->create($request->all());
 
@@ -22,13 +30,13 @@ class PedidoController extends Controller
   }
 
   public function show(Pedido $pedido) {
-    $usuario = Usuario::find($request->get('usuario_id'));
+    $usuario = Usuario::find($request->input('usuario_id'));
 
     return $usuario->pedidos->find($pedido);
   }
 
   public function update(Request $request, Pedido $pedido) {
-    $usuario = Usuario::find($request->get('usuario_id'));
+    $usuario = Usuario::find($request->input('usuario_id'));
 
     $pedido = $usuario->pedidos->find($pedido->id)->update($request->all());
 
@@ -36,9 +44,7 @@ class PedidoController extends Controller
   }
 
   public function destroy(Pedido $pedido) {
-    $usuario = Usuario::find($request->get('usuario_id'));
-
-    $usuario->pedidos->find($pedido)->delete();
+    $pedido->delete();
 
     return response('', 204);
   }
