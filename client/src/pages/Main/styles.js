@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
+export const Container = styled.div(``);
+
 export const ListaCalcados = styled.ul`
     display: grid;
     grid-template-columns: repeat(3, 1fr);

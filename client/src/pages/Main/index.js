@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
 
 import Button from "../../styles/components/Button";
-import { ListaCalcados, Select } from "./styles";
+import { ListaCalcados, Select, Container } from "./styles";
 
 import { formatPrice } from "../../util/format";
 import api from "../../services/api";
@@ -48,6 +48,10 @@ export default function Main() {
 
       if (data) setCalcados(data);
     }
+  }
+
+  async function handleSubmit() {
+  
   }
 
   return (
