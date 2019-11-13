@@ -11,6 +11,7 @@ import Header from "../../components/Header";
 
 export default function Main() {
   const [calcados, setCalcados] = useState();
+  const [novoPedido, setNovoPedido] = useState();
   const [categorias, setCategorias] = useState();
   const [pedidos, setPedidos] = useState();
   const [categoriaId, setCategoriaId] = useState();
@@ -29,9 +30,21 @@ export default function Main() {
     setCategorias(data);
   }
 
+  function handleAdd(calcadoId, quantidade){
+
+    const dataAdd = calcados.map(calcado => {
+      if(calcado.id === calcadoId){
+        calcado.quantidade += 1;
+      }
+      return{
+        ...calcado,
+      }
+    });
+    setCalcados(dataAdd);
+  }
+
   async function getPedidos() {
     const response = await api.get("pedidos");
-
     const { data } = response;
 
     setPedidos(data);
@@ -43,7 +56,8 @@ export default function Main() {
 
       const data = response.data.map(calcado => ({
         ...calcado,
-        precoformatado: formatPrice(calcado.preco)
+        precoformatado: formatPrice(calcado.preco),
+        quantidade: 0,
       }));
 
       if (data) setCalcados(data);
@@ -51,7 +65,13 @@ export default function Main() {
   }
 
   async function handleSubmit() {
-  
+
+    const calcadosSelecionados = calcados.filter(calcado => calcado.quantidade > 0);
+    const aux = await api.post(`pedidos/${pedidoId}/calcados`, {
+      calcados: calcadosSelecionados
+    });
+    window.location.reload();
+
   }
 
   return (
@@ -66,7 +86,7 @@ export default function Main() {
             {pedidos &&
               pedidos.map((pedido, key) => (
                 <option key={key} value={pedido.id}>
-                  {key}
+                  {key + 1}
                 </option>
               ))}
           </Select>
@@ -102,13 +122,13 @@ export default function Main() {
               <span>{calcado.precoformatado}</span>
               <button
                 type="button"
-                // onClick={() => handleAddProduto(produto.id)}
+                onClick={ () => handleAdd(calcado.id, calcado.quantidade) }
               >
                 <div>
-                  <MdAddShoppingCart size={16} color="#FFF" /> {0}
+                  <MdAddShoppingCart size={16} color="#FFF" /> {calcado.quantidade}
                 </div>
 
-                <span>Adiconar ao pedido</span>
+                <span >Adiconar ao pedido</span>
               </button>
             </li>
           ))}
