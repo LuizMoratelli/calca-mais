@@ -15,8 +15,8 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['middleware' => ['jwt.verify'],], function () {
   Route::apiResource('categorias', 'CategoriaController');
-
-  Route::apiResource('usuarios', 'UsuarioController');
+  
+  Route::apiResource('usuarios', 'UsuarioControllcer');
   // CalcadoController
   Route::get('/categorias/{categoria}/calcados', 'CalcadoController@index');
   Route::get('/categorias/{categoria}/calcados/{calcado}', 'CalcadoController@show');
