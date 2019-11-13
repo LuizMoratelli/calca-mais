@@ -23,7 +23,7 @@ class CalcadoController extends Controller
   }
 
   public function update(Request $request, Categoria $categoria, Calcado $calcado) {
-    $calcado = $categoria->calcados()->update($request->all());
+    $calcado = $categoria->calcados()->find($calcado->id)->update($request->all());
 
     return response()->json($calcado, 200);
   }
