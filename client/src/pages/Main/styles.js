@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
-export const ProductList = styled.ul`
+export const ListaCalcados = styled.ul`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
     list-style: none;
+    margin-top: 10px;
     li{
         display: flex;
         flex-direction: column;
@@ -55,4 +56,13 @@ export const ProductList = styled.ul`
             }
         }
     }
+`;
+
+export const SelectCategoria = styled.select`
+  max-width: auto;
+  background: #eee;
+  border: none;
+  border-radius: 4px;
+  margin: 10px 10px;
+  padding: 10px 10px;
 `;

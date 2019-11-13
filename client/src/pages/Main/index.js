@@ -1,57 +1,84 @@
 import React, { useEffect, useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
-import { ProductList } from "./styles";
+
+import Button from "../../styles/components/Button";
+import { ListaCalcados, SelectCategoria } from "./styles";
+
 import { formatPrice } from "../../util/format";
 import api from "../../services/api";
 
 import Header from "../../components/Header";
 
 export default function Main() {
-  const [produtos, setProdutos] = useState();
+  const [calcados, setCalcados] = useState();
+  const [categorias, setCategorias] = useState();
+  const [categoriaId, setCategoriaId] = useState();
 
   useEffect(() => {
-    async function getProdutos() {
-      const response = await api.get("products");
-      // formata o preço uma única vez e matém o
-      // restante dos produtos, apenas adicona uma nova propriedade
-      const data = response.data.map(product => ({
-        ...product,
-        priceFormated: formatPrice(product.price)
-      }));
-      setProdutos(data);
-    }
+    getCategorias()
   }, []);
+  async function getCategorias() {
+    const response = await api.get("categorias");
 
-  function handleAddProduto(id) {
-    const { addToCartRequest } = this.props;
+    const { data } = response;
 
-    addToCartRequest(id);
+    setCategorias(data);
+  }  
+
+  async function handleBusca() {
+    if (categoriaId) {
+      const response = await api.get(`categorias/${categoriaId}/calcados`);
+
+      const data = response.data.map(calcado => ({
+        ...calcado,
+        precoformatado: formatPrice(calcado.preco)
+      }));
+
+      if (data) setCalcados(data);
+    }
   }
+
   return (
     <>
       <Header />
-      <ProductList>
-        {produtos && (
-          produtos.map(produto => (
-            <li key={produto.id}>
-              <img src={produto.image} alt={produto.title} />
-              <strong>{produto.title}</strong>
-              <span>{produto.priceFormated}</span>
+      <SelectCategoria onChange={e => setCategoriaId(e.target.value)}>
+        <option select value="1">
+          Selecionar
+        </option>
+        {categorias &&
+          categorias.map((usuario, key) => (
+            <option key={key} value={usuario.id}>
+              {usuario.nome}
+            </option>
+          ))}
+      </SelectCategoria>
+
+      <Button size="big" onClick={e => handleBusca(e)}>
+        Buscar
+      </Button>
+      <ListaCalcados>
+        {calcados &&
+          calcados.map(calcado => (
+            <li key={calcado.id}>
+              <img
+                src="https://static.netshoes.com.br/produtos/tenis-adidas-duramo-lite-2-0-masculino/28/COL-3586-128/COL-3586-128_zoom1.jpg?ims=120x"
+                alt="tenis"
+              />
+              <strong>{calcado.nome}</strong>
+              <span>{calcado.precoformatado}</span>
               <button
                 type="button"
-                onClick={() => handleAddProduto(produto.id)}
+                // onClick={() => handleAddProduto(produto.id)}
               >
                 <div>
-                  <MdAddShoppingCart size={16} color="#FFF" />{" "}
-                  {produto.id || 0}
+                  <MdAddShoppingCart size={16} color="#FFF" /> {0}
                 </div>
-  
+
                 <span>Adiconar ao carrinho</span>
               </button>
             </li>
-          ))
-        )}
-      </ProductList>
+          ))}
+      </ListaCalcados>
     </>
   );
 }
