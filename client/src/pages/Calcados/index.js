@@ -17,6 +17,7 @@ export default function Calcados() {
   const [preco, setPreco] = useState();
   const [categoriaId, setCategoriaId] = useState();
   const [categoriaIdLista, setCategoriaIdLista] = useState();
+  const [categoriaIdEdita, setCategoriaIdEdita] = useState();
   const [calcadoId, setCalcadoId] = useState();
   const [novoCalcado, setNovoCalcado] = useState();
   const [novoPreco, setNovoPreco] = useState();
@@ -27,25 +28,30 @@ export default function Calcados() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    debugger;
-    await api.post(`categorias/${categoriaId}/calcados`, {
-      nome: novoCalcado,
-      preco: novoPreco
-    });
+    if(categoriaId){
+      await api.post(`categorias/${categoriaId}/calcados`, {
+        nome: novoCalcado,
+        preco: novoPreco
+      });
+    }
 
+    // não ta funcionando esta caralha
     toast.success("Calcado criado com sucesso!");
-    // getCalcados
+
     setNovoCalcado("");
     setNovoPreco("");
+    handleBusca();
   }
 
   async function handleBusca() {
-    debugger;
-    const response = await api.get(`categorias/${categoriaIdLista}/calcados`);
-
-    const { data } = response;
-
-    if (data) setCalcados(data);
+  
+    if(categoriaIdLista){
+      const response = await api.get(`categorias/${categoriaIdLista}/calcados`);
+  
+      const { data } = response;
+  
+      if (data) setCalcados(data);
+    }
   }
 
   function removeCalcado(calcadoId, categoriaId) {
@@ -61,13 +67,13 @@ export default function Calcados() {
 
     toast.success("Calcado excluído com sucesso!");
 
-    await api.delete(`categorias/${categoriaId}/calcados/${calcadoId}`);
+    const aux = await api.delete(`categorias/${categoriaId}/calcados/${calcadoId}`);
   }
 
   function handleEdit({ categoria_id, nome, id, preco }) {
     setCalcado(nome);
     setCalcadoId(id);
-    setCategoriaId(categoria_id);
+    setCategoriaIdEdita(categoria_id);
     setPreco(preco);
     setIsModalOpen(true);
   }
@@ -81,16 +87,17 @@ export default function Calcados() {
 
   async function handleSendEdit() {
     const aux = await api.patch(
-      `categorias/${categoriaId}/calcados/${calcadoId}`,
+      `categorias/${categoriaIdLista}/calcados/${calcadoId}`,
       {
         nome: calcado,
-        preco: preco
+        preco: preco,
+        // categoria_id: categoriaIdEdita
       }
     );
 
     toast.success("Calcado alterado com sucesso!");
     setIsModalOpen(!isModalOpen);
-    // getCalcados();
+    handleBusca();
   }
 
   function handleModal() {
@@ -114,27 +121,21 @@ export default function Calcados() {
             onChange={e => setNovoPreco(e.target.value)}
           />
           <SelectCategoria onChange={e => setCategoriaId(e.target.value)}>
-            {/* <option select value={categoriaId}>
+            <option select value="1">
               Selecionar
-            </option> */}
+            </option>
             {categorias &&
-              categorias.map(categoria => (
-                categoria.id === categoriaId ? (
-                <option select key={categoria.id} value={categoria.id}>
+              categorias.map((categoria, key) => (
+                <option key={key} value={categoria.id}>
                   {categoria.nome}
                 </option>
-                ) : (
-                  <option select key={categoria.id} value={categoria.id}>
-                    {categoria.nome}
-                  </option>
-                )
               ))}
           </SelectCategoria>
           <Button size="big" onClick={e => handleSubmit(e)}>
             Salvar
           </Button>
         </form>
-
+        <hr/>
         <SelectCategoria onChange={e => setCategoriaIdLista(e.target.value)}>
           <option select value="1">
             Selecionar
@@ -188,20 +189,21 @@ export default function Calcados() {
                 value={preco}
                 onChange={e => setPreco(e.target.value)}
               />
-              <span>Categoria</span>
-              <SelectCategoria
-                onChange={e => setCategoriaIdLista(e.target.value)}
-              >
-                <option select value="1">
-                  Selecionar
-                </option>
+              {/* <span>Categoria</span>
+              <SelectCategoria onChange={e => setCategoriaIdEdita(e.target.value)}>
                 {categorias &&
-                  categorias.map((categoria, key) => (
-                    <option key={key} value={categoria.id}>
-                      {categoria.nome}
-                    </option>
-                  ))}
-              </SelectCategoria>
+                  categorias.map(categoria =>
+                    categoria.id === categoriaId ? (
+                      <option select key={categoria.id} value={categoria.id}>
+                        {categoria.nome}
+                      </option>
+                    ) : (
+                      <option key={categoria.id} value={categoria.id}>
+                        {categoria.nome}
+                      </option>
+                    )
+                  )}
+              </SelectCategoria> */}
               <Button onClick={handleSendEdit} size="big" type="submit">
                 Salvar
               </Button>
