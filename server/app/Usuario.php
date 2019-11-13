@@ -33,6 +33,6 @@ class Usuario extends Authenticatable implements JWTSubject
   }
 
   public function pedidos() {
-    return $this->hasMany('App\Pedido', 'usuario_id', 'id');
+    return $this->hasMany('App\Pedido');
   }
 }

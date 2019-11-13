@@ -13,7 +13,7 @@ class Pedido extends Model
   ];
 
   public function usuario() {
-    return $this->hasMany('App\Usuario');
+    return $this->belongsTo('App\Usuario');
   }
 
   public function calcados() {
