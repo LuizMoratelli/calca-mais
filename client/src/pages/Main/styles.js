@@ -58,7 +58,7 @@ export const ListaCalcados = styled.ul`
     }
 `;
 
-export const SelectCategoria = styled.select`
+export const Select = styled.select`
   max-width: auto;
   background: #eee;
   border: none;

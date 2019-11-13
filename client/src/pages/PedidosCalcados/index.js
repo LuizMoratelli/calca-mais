@@ -9,98 +9,60 @@ import api from "../../services/api";
 
 import { Container, PedidoCalcado, ButtonIcon, Select } from "./styles";
 
+// só vai poder ver os pedidos com os calcados e excluir os mesmos
 export default function PedidosCalcados() {
   const [pedidos, setPedidos] = useState();
-  const [calcados, setCalcados] = useState();
+  const [pedidosCalcados, setPedidosCalcados] = useState();
+  const [pedidosCalcadosId, setPedidosCalcadosId] = useState();
   const [quantidade, setQuantidade] = useState();
-  const [pedidoIdLista, setPedidoIdLista] = useState();
-  const [pedidoId, setPedidoId] = useState();
+  const [calcadoId, setCalcadoId] = useState();
 
-  // useEffect(() => {
-  //   getPedidos();
-  // }, []);
+  useEffect(() => {
+    getPedidos();
+  }, []);
 
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   if(pedidoId){
-  //     await api.post(`pedidos/${pedidoId}`, {
-  //       calcados: [calcados],
-  //     });
-  //   }
-
-  //   // não ta funcionando esta caralha
-  //   toast.success("Pedido Calçado criado com sucesso!");
-
-  //   setQuantidade("");
-  //   handleBusca();
-  // }
-
-  // async function handleBusca() {
+  async function handleBusca() {
   
-  //   if(pedidoIdLista){
-  //     const response = await api.get(`pedidos/${pedidoIdLista}/calcados`);
+    if(pedidosCalcadosId){
+      const response = await api.get(`pedidos/${pedidosCalcadosId}/calcados`);
   
-  //     const { data } = response;
+      const { data } = response;
   
-  //     if (data) setPedidos(data);
-  //   }
-  // }
+      if (data) setPedidos(data);
+    }
+  }
 
-  // function removePedidoCalcado(pedidoId) {
-  //   const pedidosFiltrados = pedidos.filter(
-  //     pedido => pedido.id !== pedidoId
-  //   );
+  function removePedidoCalcado(pedidoCalcadoId) {
+    const pedidoCalcadoFiltrados = pedidosCalcados.filter(
+      pedidoCalcado => pedidoCalcado.id !== pedidoCalcadoId
+    );
 
-  //   setPedidos(pedidosFiltrados);
-  // }
+    setPedidosCalcados(pedidoCalcadoFiltrados);
+  }
 
-  // async function handleDelete(pedidoId) {
-  //   removePedidoCalcado(pedidoId);
+  async function handleDelete(pedidoCalcadoId) {
+    removePedidoCalcado(pedidoCalcadoId);
 
-  //   toast.success("Pedido Calçado excluído com sucesso!");
+    toast.success("Pedido Calçado excluído com sucesso!");
 
-  //   const aux = await api.delete(`pedidos/${pedidoId}/calcados/${calcadoId}`, {
-  //     "calcados-id": [calcadoId],
-  //   });
-  // }
+    const aux = await api.delete(`pedidos/${pedidoId}/calcados/${calcadoId}`, {
+      "calcados-id": [pedidoCalcadoId],
+    });
+  }
 
-  // function handleEdit({ usuario_id, id, desconto }) {
-  //   setPedidoId(id);
-  //   setUsuarioIdEdita(usuario_id);
-  //   setDesconto(desconto);
-  //   setIsModalOpen(true);
-  // }
-  // async function getPedidos() {
-  //   const response = await api.get("pedidos");
+  async function getPedidos() {
+    const response = await api.get("pedidos");
 
-  //   const { data } = response;
+    const { data } = response;
 
-  //   setPedidos(data);
-  // }
-
-  // async function handleSendEdit() {
-  //   const aux = await api.patch(
-  //     `pedidos/${pedidoId}`,
-  //     {
-  //       desconto: desconto,
-  //       usuario_id: usuarioIdEdita
-  //     }
-  //   );
-
-  //   toast.success("Pedido alterado com sucesso!");
-  //   setIsModalOpen(!isModalOpen);
-  //   handleBusca();
-  // }
-
-  // function handleModal() {
-  //   setIsModalOpen(!isModalOpen);
-  // }
+    setPedidos(data);
+  }
 
   return (
     <>
       <Header />
-      {/* <Container>
-        <form>
+      <Container>
+        {/* <form>
 
           <input
             value={novoDesconto}
@@ -121,15 +83,15 @@ export default function PedidosCalcados() {
           <Button size="big" onClick={e => handleSubmit(e)}>
             Salvar
           </Button>
-        </form>
-        <hr/>
-        <Select onChange={e => setPedidoIdLista(e.target.value)}>
+        </form> */}
+        {/* <hr/> */}
+        <Select onChange={e => setPedidosCalcadosId(e.target.value)}>
           <option select value="1">
             Selecionar
           </option>
-          {pedidos &&
-            usuarios.map((usuario, key) => (
-              <option key={key} value={usuario.id}>
+          {pedidosCalcados &&
+            pedidosCalcados.map((pedido, key) => (
+              <option key={key} value={pedido.id}>
                 {key}
               </option>
             ))}
@@ -139,19 +101,16 @@ export default function PedidosCalcados() {
           Buscar
         </Button>
         <ul>
-          {pedidos &&
-            pedidos.map((pedido, key) => (
+          {pedidosCalcados &&
+            pedidosCalcados.map((pedidoCalcado, key) => (
               <PedidoCalcado key={key}>
-                <strong>{pedido.desconto}</strong>
+                <strong>{pedidoCalcado.quantidade}</strong>
                 <strong>
-                  <ButtonIcon>
-                    <MdModeEdit size={20} onClick={() => handleEdit(pedido)} />
-                  </ButtonIcon>
                   <ButtonIcon>
                     <MdDelete
                       size={20}
                       onClick={() =>
-                        handleDelete(pedido.id)
+                        handleDelete(pedidoCalcado.id)
                       }
                     />
                   </ButtonIcon>
@@ -159,7 +118,7 @@ export default function PedidosCalcados() {
               </PedidoCalcado>
             ))}
         </ul>
-      </Container> */}
+      </Container>
     </>
   );
 }

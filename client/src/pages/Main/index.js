@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
 
 import Button from "../../styles/components/Button";
-import { ListaCalcados, SelectCategoria } from "./styles";
+import { ListaCalcados, Select } from "./styles";
 
 import { formatPrice } from "../../util/format";
 import api from "../../services/api";
@@ -12,18 +12,30 @@ import Header from "../../components/Header";
 export default function Main() {
   const [calcados, setCalcados] = useState();
   const [categorias, setCategorias] = useState();
+  const [pedidos, setPedidos] = useState();
   const [categoriaId, setCategoriaId] = useState();
+  const [pedidoId, setPedidoId] = useState();
 
   useEffect(() => {
-    getCategorias()
+    getCategorias();
+    getPedidos();
   }, []);
+
   async function getCategorias() {
     const response = await api.get("categorias");
 
     const { data } = response;
 
     setCategorias(data);
-  }  
+  }
+
+  async function getPedidos() {
+    const response = await api.get("pedidos");
+
+    const { data } = response;
+
+    setPedidos(data);
+  }
 
   async function handleBusca() {
     if (categoriaId) {
@@ -41,7 +53,25 @@ export default function Main() {
   return (
     <>
       <Header />
-      <SelectCategoria onChange={e => setCategoriaId(e.target.value)}>
+      <Container>
+        <form>
+          <Select onChange={e => setPedidoId(e.target.value)}>
+            <option select value="1">
+              Selecionar
+            </option>
+            {pedidos &&
+              pedidos.map((pedido, key) => (
+                <option key={key} value={pedido.id}>
+                  {key}
+                </option>
+              ))}
+          </Select>
+          <Button size="big" onClick={e => handleSubmit(e)}>
+            Salvar Pedido
+          </Button>
+        </form>
+      </Container>
+      <Select onChange={e => setCategoriaId(e.target.value)}>
         <option select value="1">
           Selecionar
         </option>
@@ -51,7 +81,7 @@ export default function Main() {
               {usuario.nome}
             </option>
           ))}
-      </SelectCategoria>
+      </Select>
 
       <Button size="big" onClick={e => handleBusca(e)}>
         Buscar
@@ -74,7 +104,7 @@ export default function Main() {
                   <MdAddShoppingCart size={16} color="#FFF" /> {0}
                 </div>
 
-                <span>Adiconar ao carrinho</span>
+                <span>Adiconar ao pedido</span>
               </button>
             </li>
           ))}
