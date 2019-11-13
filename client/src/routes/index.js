@@ -8,6 +8,7 @@ import Guest from './guest'
 
 import Main from '../pages/Main'
 import SignIn from '../pages/Auth/SignIn'
+import SignUp from '../pages/Auth/SignUp'
 import Calcados from '../pages/Calcados'
 import Categorias from '../pages/Categorias'
 import Usuarios from '../pages/Usuarios'
@@ -17,6 +18,7 @@ const Routes = () => (
   <ConnectedRouter history={history}>
     <Switch>
       <Guest path="/signin" component={SignIn} />
+      <Guest path="/signup" component={SignUp} /> 
       <Private path="/" exact component={Main} />
       <Private path="/categorias" component={Categorias} />
       <Private path="/calcados" component={Calcados} />

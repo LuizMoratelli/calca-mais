@@ -1,12 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
-export const StyledLink = styled(Link)`
-  color: white;
-  font-weight: bold;
-  text-align: right;
-  margin-top: 10px;
-`;
 
 export const Container = styled.div`
     flex: 1;
@@ -57,7 +49,4 @@ export const SignForm = styled.form`
     button{
         margin: 20px 0 0;
     }
-
 `;
-
-

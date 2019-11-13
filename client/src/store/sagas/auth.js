@@ -24,13 +24,8 @@ export function* signIn({ email, password }){
 
 export function* signUp({ nome, email, password }){
     try {
-        yield call(api.post,'usuarios', { nome, email, password } );
-
-        const response = yield call(api.post,'auth/login', { email, password } );
-        localStorage.setItem('@calcamais:token', response.data);
-
-        yield put(AuthActions.signInSuccess(response.data.token))
-        yield put(push('/'));
+        yield call(api.post, 'auth/register', { nome, email, password } );
+        yield signIn({ email, password });
     } catch (error) {
         console.log(error);
         yield put(toastrActions.add({
