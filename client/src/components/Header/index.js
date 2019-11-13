@@ -29,7 +29,7 @@ function Header() {
         </div>
         <MdShoppingBasket size={36} color="#fff"/>
       </Opcao>
-      <Opcao to="/pedidoscalcado">
+      <Opcao to="/pedidoscalcados">
         <div>
           <strong>Pedidos Calçados</strong>
         </div>
