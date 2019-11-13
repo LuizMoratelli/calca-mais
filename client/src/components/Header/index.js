@@ -11,31 +11,33 @@ function Header() {
       <Link to="/">
         <Logo src={logo} alt="calça mais" />
       </Link>
-      <Opcao to="/pedidos">
-        <div>
-          <strong>Pedidos</strong>
-          <span>itens</span>
-        </div>
-        <MdShoppingBasket size={36} color="#fff"/>
-      </Opcao>
       <Opcao to="/usuarios">
         <div>
           <strong>Usuarios</strong>
-          <span>itens</span>
         </div>
         <MdAccountCircle size={36} color="#fff"/>
       </Opcao>
       <Opcao to="/categorias">
         <div>
           <strong>Categorias</strong>
-          <span>itens</span>
         </div>
         <MdStorage size={36} color="#fff"/>
+      </Opcao>
+      <Opcao to="/pedidos">
+        <div>
+          <strong>Pedidos</strong>
+        </div>
+        <MdShoppingBasket size={36} color="#fff"/>
+      </Opcao>
+      <Opcao to="/pedidoscalcado">
+        <div>
+          <strong>Pedidos Calçados</strong>
+        </div>
+        <MdShoppingBasket size={36} color="#fff"/>
       </Opcao>
       <Opcao to="/calcados">
         <div>
           <strong>Calçados</strong>
-          <span>itens</span>
         </div>
         <MdBorderColor size={36} color="#fff"/>
       </Opcao>
