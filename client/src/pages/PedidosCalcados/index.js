@@ -16,90 +16,90 @@ export default function PedidosCalcados() {
   const [pedidoIdLista, setPedidoIdLista] = useState();
   const [pedidoId, setPedidoId] = useState();
 
-  useEffect(() => {
-    getPedidos();
-  }, []);
+  // useEffect(() => {
+  //   getPedidos();
+  // }, []);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if(pedidoId){
-      await api.post(`pedidos/${pedidoId}`, {
-        calcados: [calcados],
-      });
-    }
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+  //   if(pedidoId){
+  //     await api.post(`pedidos/${pedidoId}`, {
+  //       calcados: [calcados],
+  //     });
+  //   }
 
-    // não ta funcionando esta caralha
-    toast.success("Pedido Calçado criado com sucesso!");
+  //   // não ta funcionando esta caralha
+  //   toast.success("Pedido Calçado criado com sucesso!");
 
-    setQuantidade("");
-    handleBusca();
-  }
+  //   setQuantidade("");
+  //   handleBusca();
+  // }
 
-  async function handleBusca() {
+  // async function handleBusca() {
   
-    if(pedidoIdLista){
-      const response = await api.get(`pedidos/${pedidoIdLista}/calcados`);
+  //   if(pedidoIdLista){
+  //     const response = await api.get(`pedidos/${pedidoIdLista}/calcados`);
   
-      const { data } = response;
+  //     const { data } = response;
   
-      if (data) setPedidos(data);
-    }
-  }
+  //     if (data) setPedidos(data);
+  //   }
+  // }
 
-  function removePedidoCalcado(pedidoId) {
-    const pedidosFiltrados = pedidos.filter(
-      pedido => pedido.id !== pedidoId
-    );
+  // function removePedidoCalcado(pedidoId) {
+  //   const pedidosFiltrados = pedidos.filter(
+  //     pedido => pedido.id !== pedidoId
+  //   );
 
-    setPedidos(pedidosFiltrados);
-  }
+  //   setPedidos(pedidosFiltrados);
+  // }
 
-  async function handleDelete(pedidoId) {
-    removePedidoCalcado(pedidoId);
+  // async function handleDelete(pedidoId) {
+  //   removePedidoCalcado(pedidoId);
 
-    toast.success("Pedido Calçado excluído com sucesso!");
+  //   toast.success("Pedido Calçado excluído com sucesso!");
 
-    const aux = await api.delete(`pedidos/${pedidoId}/calcados/${calcadoId}`, {
-      "calcados-id": [calcadoId],
-    });
-  }
+  //   const aux = await api.delete(`pedidos/${pedidoId}/calcados/${calcadoId}`, {
+  //     "calcados-id": [calcadoId],
+  //   });
+  // }
 
-  function handleEdit({ usuario_id, id, desconto }) {
-    setPedidoId(id);
-    setUsuarioIdEdita(usuario_id);
-    setDesconto(desconto);
-    setIsModalOpen(true);
-  }
-  async function getPedidos() {
-    const response = await api.get("pedidos");
+  // function handleEdit({ usuario_id, id, desconto }) {
+  //   setPedidoId(id);
+  //   setUsuarioIdEdita(usuario_id);
+  //   setDesconto(desconto);
+  //   setIsModalOpen(true);
+  // }
+  // async function getPedidos() {
+  //   const response = await api.get("pedidos");
 
-    const { data } = response;
+  //   const { data } = response;
 
-    setPedidos(data);
-  }
+  //   setPedidos(data);
+  // }
 
-  async function handleSendEdit() {
-    const aux = await api.patch(
-      `pedidos/${pedidoId}`,
-      {
-        desconto: desconto,
-        usuario_id: usuarioIdEdita
-      }
-    );
+  // async function handleSendEdit() {
+  //   const aux = await api.patch(
+  //     `pedidos/${pedidoId}`,
+  //     {
+  //       desconto: desconto,
+  //       usuario_id: usuarioIdEdita
+  //     }
+  //   );
 
-    toast.success("Pedido alterado com sucesso!");
-    setIsModalOpen(!isModalOpen);
-    handleBusca();
-  }
+  //   toast.success("Pedido alterado com sucesso!");
+  //   setIsModalOpen(!isModalOpen);
+  //   handleBusca();
+  // }
 
-  function handleModal() {
-    setIsModalOpen(!isModalOpen);
-  }
+  // function handleModal() {
+  //   setIsModalOpen(!isModalOpen);
+  // }
 
   return (
     <>
       <Header />
-      <Container>
+      {/* <Container>
         <form>
 
           <input
@@ -133,7 +133,7 @@ export default function PedidosCalcados() {
                 {key}
               </option>
             ))}
-        </SelectUsuario>
+        </Select>
 
         <Button size="big" onClick={e => handleBusca(e)}>
           Buscar
@@ -159,41 +159,7 @@ export default function PedidosCalcados() {
               </PedidoCalcado>
             ))}
         </ul>
-        {isModalOpen && (
-          <Modal size="big">
-            <h1>Edição Pedido</h1>
-            <form>
-              <span>Desconto</span>
-              <input
-                name="10,00"
-                value={desconto}
-                onChange={e => setDesconto(e.target.value)}
-              />
-              <span>Usuario</span>
-              <SelectUsuario onChange={e => setUsuarioIdEdita(e.target.value)}>
-                {usuarios &&
-                  usuarios.map(usuario =>
-                    usuario.id === usuarioId ? (
-                      <option select key={usuario.id} value={usuario.id}>
-                        {usuario.nome}
-                      </option>
-                    ) : (
-                      <option key={usuario.id} value={usuario.id}>
-                        {usuario.nome}
-                      </option>
-                    )
-                  )}
-              </SelectUsuario>
-              <Button onClick={handleSendEdit} size="big" type="submit">
-                Salvar
-              </Button>
-              <Button onClick={handleModal} size="small" color="gray">
-                Cancelar
-              </Button>
-            </form>
-          </Modal>
-        )}
-      </Container>
+      </Container> */}
     </>
   );
 }
