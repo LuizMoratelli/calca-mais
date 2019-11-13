@@ -44,17 +44,13 @@ class PedidoCalcadoController extends Controller
       ])->get());
   }
   
-  public function destroy(Request $request, Pedido $pedido) {
-    $calcados = $request->get('calcados-id');
+  public function destroy(Pedido $pedido, Calcado $calcado) {
+    $pedidoCalcado = PedidoCalcado::where([
+      ['pedido_id', $pedido->id],
+      ['calcado_id', $calcado->id]
+    ]);
 
-    foreach ($calcados as $calcado) {
-      $pedidoCalcado = PedidoCalcado::where([
-        ['pedido_id', $pedido->id],
-        ['calcado_id', $calcado]
-      ]);
-
-      $pedidoCalcado->delete();
-    }
+    $pedidoCalcado->delete();
 
     return response()->json(PedidoCalcado::where('pedido_id', $pedido->id)->get(), 200);
   }
