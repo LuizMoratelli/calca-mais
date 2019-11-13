@@ -3,7 +3,6 @@ import { MdModeEdit, MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 
 import Header from "../../components/Header";
-import Modal from "../../components/Modal";
 import Button from "../../styles/components/Button";
 import api from "../../services/api";
 
@@ -27,8 +26,7 @@ export default function PedidosCalcados() {
       const response = await api.get(`pedidos/${pedidosCalcadosId}/calcados`);
   
       const { data } = response;
-  
-      if (data) setPedidos(data);
+      if (data) setPedidosCalcados(data);
     }
   }
 
@@ -40,14 +38,11 @@ export default function PedidosCalcados() {
     setPedidosCalcados(pedidoCalcadoFiltrados);
   }
 
-  async function handleDelete(pedidoCalcadoId) {
+  async function handleDelete(pedidoCalcadoId, calcadoId) {
     removePedidoCalcado(pedidoCalcadoId);
 
     toast.success("Pedido Calçado excluído com sucesso!");
-
-    const aux = await api.delete(`pedidos/${pedidoId}/calcados/${calcadoId}`, {
-      "calcados-id": [pedidoCalcadoId],
-    });
+    const aux = await api.delete(`pedidos/${pedidosCalcadosId}/calcados/${calcadoId}`);
   }
 
   async function getPedidos() {
@@ -62,30 +57,25 @@ export default function PedidosCalcados() {
     <>
       <Header />
       <Container>
-        {/* <form>
+        <form>
 
-          <input
-            value={novoDesconto}
-            placeholder="desconto"
-            onChange={e => setNovoDesconto(e.target.value)}
-          />
-          <Select onChange={e => setPedidoId(e.target.value)}>
+          <Select onChange={e => setPedidosCalcadosId(e.target.value)}>
             <option select value="1">
               Selecionar
             </option>
             {pedidos &&
               pedidos.map((pedido, key) => (
                 <option key={key} value={pedido.id}>
-                  {key} - {pedido.desconto}
+                  {key + 1} - {pedido.desconto}
                 </option>
               ))}
           </Select>
-          <Button size="big" onClick={e => handleSubmit(e)}>
-            Salvar
+          <Button size="big" onClick={handleBusca} >
+            Buscar
           </Button>
-        </form> */}
-        {/* <hr/> */}
-        <Select onChange={e => setPedidosCalcadosId(e.target.value)}>
+        </form>
+        <hr/>
+        {/* <Select onChange={e => setPedidosCalcadosId(e.target.value)}>
           <option select value="1">
             Selecionar
           </option>
@@ -99,18 +89,19 @@ export default function PedidosCalcados() {
 
         <Button size="big" onClick={e => handleBusca(e)}>
           Buscar
-        </Button>
+        </Button> */}
         <ul>
           {pedidosCalcados &&
             pedidosCalcados.map((pedidoCalcado, key) => (
               <PedidoCalcado key={key}>
                 <strong>{pedidoCalcado.quantidade}</strong>
+                <strong>{pedidoCalcado.nome}</strong>
                 <strong>
                   <ButtonIcon>
                     <MdDelete
                       size={20}
                       onClick={() =>
-                        handleDelete(pedidoCalcado.id)
+                        handleDelete(pedidoCalcado.id, pedidoCalcado.calcado_id)
                       }
                     />
                   </ButtonIcon>
