@@ -19,6 +19,7 @@ export const Content = styled.div`
     padding: 40px;
     width: ${props => (props.size === 'big' ? 650 : 400)}px;
     h1{
+        color: #b9bbbe;
         font-size: 26px;
         font-weight: 500;
         text-align: center;
